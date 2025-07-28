@@ -1,0 +1,26 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "Debug OpenCV App",
+        "type": "cppdbg",
+        "request": "launch",
+        "program": "${workspaceFolder}/mask_app",
+        "args": [],
+        "stopAtEntry": false,
+        "cwd": "${workspaceFolder}",
+        "environment": [],
+        "externalConsole": false,
+        "MIMode": "lldb",
+        "preLaunchTask": "Build OpenCV App",
+        "setupCommands": [
+          {
+            "description": "Enable pretty-printing for lldb",
+            "text": "settings set target.inline-breakpoint-strategy always",
+            "ignoreFailures": true
+          }
+        ]
+      }
+    ]
+  }
+  
