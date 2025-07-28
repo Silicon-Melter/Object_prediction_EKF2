@@ -11,19 +11,16 @@ int main() {
         return -1;
     }
 
-    // Kalman Filter: 4D state [x, y, vx, vy], 2D measurement [x, y]
     KalmanFilter KF(4, 2, 0);
-
     KF.transitionMatrix = (Mat_<float>(4, 4) <<
         1, 0, 1, 0,
         0, 1, 0, 1,
         0, 0, 1, 0,
         0, 0, 0, 1);
 
-    // Better tuning for real-time prediction
     setIdentity(KF.measurementMatrix);
-    setIdentity(KF.processNoiseCov, Scalar::all(1e-2));     // Trust motion model more
-    setIdentity(KF.measurementNoiseCov, Scalar::all(1e-2)); // Trust sensor slightly less
+    setIdentity(KF.processNoiseCov, Scalar::all(1e-2));
+    setIdentity(KF.measurementNoiseCov, Scalar::all(1e-2));
     setIdentity(KF.errorCovPost, Scalar::all(0.1));
     KF.statePost = (Mat_<float>(4, 1) << 0, 0, 0, 0);
 
@@ -34,7 +31,7 @@ int main() {
         cap >> frame;
         if (frame.empty()) break;
 
-        // Convert to HSV and apply red mask
+        // Convert to HSV and mask red
         Mat hsv, mask1, mask2, mask;
         cvtColor(frame, hsv, COLOR_BGR2HSV);
         inRange(hsv, Scalar(0, 100, 100), Scalar(10, 255, 255), mask1);
@@ -57,27 +54,35 @@ int main() {
                 measuredCenter = Point2f(bbox.x + bbox.width / 2.0, bbox.y + bbox.height / 2.0);
                 rectangle(frame, bbox, Scalar(255, 0, 0), 2);
                 found = true;
-                break; // Use only first/largest contour
+                break;
             }
         }
 
-        // Predict next position
+        // Kalman prediction
         Mat prediction = KF.predict();
         Point2f predictPt(prediction.at<float>(0), prediction.at<float>(1));
 
-        // Update Kalman filter with actual measurement
+        // Correction with measurement
         if (found) {
             measurement.at<float>(0) = measuredCenter.x;
             measurement.at<float>(1) = measuredCenter.y;
             KF.correct(measurement);
         }
 
-        // Draw actual and predicted positions
+        // Draw actual and predicted
         if (found)
-            circle(frame, measuredCenter, 6, Scalar(0, 0, 255), -1); // Red: Measured
-        circle(frame, predictPt, 6, Scalar(0, 255, 0), -1);          // Green: Predicted
+            circle(frame, measuredCenter, 6, Scalar(0, 0, 255), -1); // Red = detected
+        circle(frame, predictPt, 6, Scalar(0, 255, 0), -1);          // Green = current prediction
 
-        imshow("Red Object Tracker with Kalman", frame);
+        // 🔮 Predict next N positions (e.g., 30 future frames)
+        KalmanFilter KF_future = KF; // Clone current state
+        for (int i = 1; i <= 30; ++i) {
+            Mat futurePrediction = KF_future.predict();
+            Point2f futurePt(futurePrediction.at<float>(0), futurePrediction.at<float>(1));
+            circle(frame, futurePt, 2, Scalar(255, 255, 0), -1); // Cyan dots = future trajectory
+        }
+
+        imshow("Red Object Trajectory Prediction", frame);
         if (waitKey(1) == 27) break; // ESC
     }
 
