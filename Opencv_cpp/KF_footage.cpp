@@ -21,7 +21,7 @@ int main() {
     setIdentity(KF.measurementMatrix);
     setIdentity(KF.processNoiseCov, Scalar::all(1e-2));
     setIdentity(KF.measurementNoiseCov, Scalar::all(1e-2));
-    setIdentity(KF.errorCovPost, Scalar::all(0.1));
+    setIdentity(KF.errorCovPost, Scalar::all(1.0));
     KF.statePost = (Mat_<float>(4, 1) << 0, 0, 0, 0);
 
     Mat frame;
