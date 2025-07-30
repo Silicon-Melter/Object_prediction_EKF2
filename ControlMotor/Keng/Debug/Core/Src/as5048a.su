@@ -1,0 +1,7 @@
+../Core/Src/as5048a.c:48:9:spi_calc_event_parity	24	static
+../Core/Src/as5048a.c:64:10:read	24	static
+../Core/Src/as5048a.c:96:10:write	24	static
+../Core/Src/as5048a.c:132:6:as5048a_init	24	static
+../Core/Src/as5048a.c:141:7:get_angle	16	static
+../Core/Src/as5048a.c:149:7:get_vel_foc	24	static
+../Core/Src/as5048a.c:171:7:get_vel	4	static

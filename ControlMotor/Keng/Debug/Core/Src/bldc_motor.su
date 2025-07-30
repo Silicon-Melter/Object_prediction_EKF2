@@ -1,0 +1,10 @@
+../Core/Src/bldc_motor.c:72:7:vel_open_loop	24	static
+../Core/Src/bldc_motor.c:90:6:set_phrase_voltage	56	static
+../Core/Src/bldc_motor.c:136:5:align_sensor	40	static
+../Core/Src/bldc_motor.c:206:9:bldc_open_loop_init	16	static
+../Core/Src/bldc_motor.c:228:9:bldc_vel_ctrl_init	40	static
+../Core/Src/bldc_motor.c:262:5:foc_init	16	static
+../Core/Src/bldc_motor.c:274:6:bldc_enable	8	static
+../Core/Src/bldc_motor.c:281:6:bldc_disable	8	static
+../Core/Src/bldc_motor.c:288:6:bldc_move	16	static
+../Core/Src/bldc_motor.c:319:6:loop_foc	16	static

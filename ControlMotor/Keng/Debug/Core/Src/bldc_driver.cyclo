@@ -1,0 +1,4 @@
+../Core/Src/bldc_driver.c:44:6:set_pwm	22
+../Core/Src/bldc_driver.c:77:5:driver_init	2
+../Core/Src/bldc_driver.c:110:6:driver_enable	1
+../Core/Src/bldc_driver.c:117:6:driver_disable	1

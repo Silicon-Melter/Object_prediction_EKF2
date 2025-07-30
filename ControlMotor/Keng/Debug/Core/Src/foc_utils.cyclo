@@ -1,0 +1,5 @@
+../Core/Src/foc_utils.c:16:7:_normalize_angle	2
+../Core/Src/foc_utils.c:23:6:_sincos	1
+../Core/Src/foc_utils.c:29:7:_sin	4
+../Core/Src/foc_utils.c:126:7:_cos	2
+../Core/Src/foc_utils.c:133:7:_electricalAngle	1
