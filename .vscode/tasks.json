@@ -1,0 +1,29 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "Build OpenCV App",
+        "type": "shell",
+        "command": "g++",
+        "args": [
+          "${file}",                    // This compiles the current file (e.g., mask.cpp)
+          "-o",
+          "${fileDirname}/${fileBasenameNoExtension}",
+          "`pkg-config", "--cflags", "--libs", "opencv4`"
+        ],
+        "options": {
+          "cwd": "${fileDirname}",      // Run in the folder of the file
+          "shell": {
+            "executable": "/bin/zsh",
+            "args": ["-c"]
+          }
+        },
+        "problemMatcher": ["$gcc"],
+        "group": {
+          "kind": "build",
+          "isDefault": true
+        }
+      }
+    ]
+  }
+  
